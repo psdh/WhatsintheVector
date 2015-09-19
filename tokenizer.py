@@ -15,9 +15,10 @@ def main():
 	tokens = []
 
         os.chdir(base)
-	f = open('output.py', 'w')
+	#f = open('output.py', 'a')
 	#f.write('tokens = [')
-        f.close()
+        #f.close()
+        errors = []
 
         for dire in list_dir:
 		currdir = base + dire
@@ -28,8 +29,13 @@ def main():
 		list_file = os.listdir(currdir)
 
                 for fil in list_file:
-			f = codecs.open(fil, 'r', encoding='utf8')
-			t = f.read()
+                        print "\n\n" + "trying for file, " + currdir+ "/" + fil +"\n\n"
+                        try:
+                            f = codecs.open(fil, 'r', encoding='utf8')
+			    t = f.read()
+                        except:
+                            errors.append(currdir+"/"+fil)
+                            continue
                         temp_tokens = word_tokenize(t)
 			temp_tokens = [porter.stem(tok) for tok in temp_tokens]
 			temp_tokens = [tok for tok in temp_tokens if tok not in stopwords.words('english')]
@@ -38,17 +44,27 @@ def main():
 			f.close()
 			print temp_tokens
                         os.chdir(base)
+                        temp_tokens = set(temp_tokens)
+                        temp_tokens = list(temp_tokens)
+                        
+                        temp2 = []
+                        for toks in temp_tokens:
+                            if toks not in tokens:
+                                temp2.append(toks)
 
-                        w = open('output.py', 'w+')
-                        for tok in temp_tokens:
+                        tokens += temp2
+                        w = open('output.py', 'a')
+                        for tok in temp2:
                             w.write(" " + tok.encode('ascii', 'ignore'))
                         w.close()
                         
                         os.chdir(currdir)
         os.chdir(base)
-	f = open('output.py', 'w')
-	f.write('tokens = ')
-	f.write(tokens)
+        
+        f.open('errors', 'w')
+        for x in errors:
+            f.write(x)
 
+        f.close()
 if __name__ == "__main__":
 	main()
