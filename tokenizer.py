@@ -30,6 +30,7 @@ def main():
 
                 for fil in list_file:
                         print "\n\n" + "trying for file, " + currdir+ "/" + fil +"\n\n"
+                        os.chdir(currdir)
                         try:
                             f = codecs.open(fil, 'r', encoding='utf8')
 			    t = f.read()
@@ -37,16 +38,16 @@ def main():
                             errors.append(currdir+"/"+fil)
                             continue
                         temp_tokens = word_tokenize(t)
-			temp_tokens = [porter.stem(tok) for tok in temp_tokens]
+			temp_tokens = [porter.stem(tok).lower() for tok in temp_tokens]
 			temp_tokens = [tok for tok in temp_tokens if tok not in stopwords.words('english')]
                         temp_tokens = [tok for tok in temp_tokens if tok not in ';@#$%^&*()_+=-<>?|: ,./!``~\'\'s"[]{\\}']
                         tokens.append(temp_tokens)
 			f.close()
-			print temp_tokens
+			#print temp_tokens
                         os.chdir(base)
                         temp_tokens = set(temp_tokens)
                         temp_tokens = list(temp_tokens)
-                        
+
                         temp2 = []
                         for toks in temp_tokens:
                             if toks not in tokens:
@@ -57,10 +58,9 @@ def main():
                         for tok in temp2:
                             w.write(" " + tok.encode('ascii', 'ignore'))
                         w.close()
-                        
+
                         os.chdir(currdir)
         os.chdir(base)
-        
         f.open('errors', 'w')
         for x in errors:
             f.write(x)
