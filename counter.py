@@ -5,43 +5,72 @@ def main():
     base = "/home/varunwachaspati/Downloads/Information Retrieval /WhatsintheVector/"
     os.chdir(base)
 
-    f = open('tfidf.py', 'a')
-    
+    # f = open('tfidf.py', 'w')
+    # f.close()
+    empty = []
+    os.chdir(base + 'tokens/') 
+    listdir = os.listdir(base + 'tokens/')
+
     for token in tokens:
-    	print token
-    	os.chdir(base + 'tokens/')
+        if token < "0pp":
+            continue
+        os.chdir(base)
+
+        f = open('tfidf.py', 'a')
         
-        listdir = os.listdir(base + 'tokens/')
-        f.write(str(token) + " = ")
+        if unicode(token, "utf-8")[0].isnumeric(): 
+            f.write("n"+str(token) + " = ")
+        else:
+            f.write(str(token) + " = ")
+        
+        #print str(token)
+        f.close()
+        
+        doc_freq = []
         
         for token_file in listdir:
-        	exec("from " + token_file + " import lis")
+            if token_file == "__init__.py":
+                continue
+            if ".pyc" in token_file:
+                continue;
+            # print token_file
+            os.chdir(base)
+            f = open('tfidf.py', 'a')
+            #print os.getcwd()
+            exec("from tokens." + token_file[:-3] + " import lis")
 
-        	print lis
-        	# p = open(token_file, 'r')
-        	# t = p.read()
-        	# token_list = t[6:-1]
-        	# token_list = token_list.split(",")
-        	# print token_list
+            
+            # p = open(token_file, 'r')
+            # t = p.read()
+            # token_list = t[6:-1]
+            # token_list = token_list.split(",")
+            # print token_list
 
-        	# p.close()
-    #     	token_list.sort()
-        	
-    #     	count = 0
-        	
-    #     	for x in token_list:
-    #     		print token[1:-1] + " " + x[3:-1] 
-    #     		if token[1:-1] == x[2:-1]:
-    #     			count+=1
-    #     	print count
-    #     	if count > 0:
-    #     	    f.write("(" + str(token_file) + "," + str(count)+")"+",")
+            # p.close()
+    #       token_list.sort()
+            
+            count = 0
+            
+            for x in lis: 
+                if token == x:
+                    count+=1
+    #       print count
+            if count > 0:
+                term_freq = (token_file, count)
+                # print term_freq
+                doc_freq.append(term_freq)
+            
+        f.write(str(doc_freq))
+        #if count == 0:
+        #    f.write(str(empty))
+        f.write("\n")
+        f.close()
         
 
-    # 	f.write("]\n")
+    #   f.write("]\n")
     
-    # f.close()
-    # q.close()
+
+    q.close()
 
 if __name__ == '__main__':
     main()
