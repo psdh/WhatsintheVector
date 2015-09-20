@@ -1,20 +1,20 @@
-import os
 from nltk import word_tokenize
 from nltk.corpus import stopwords
+import os
+import string
+import unicodedata
 
 def main():
     os.chdir('/home/psd/Downloads/19cTexts/')
-    
+
     w = open('output.txt', 'a')
     f = open('output.py', 'r')
 
     r = f.read()
 
-    for x in r:
-        if x in "~`!@#$%^&*()_+-=|}{[]:\"';<>?/.,\\":
-            continue
-        else:
-            w.write(x)
+    r = unicodedata.normalize('NFKD', f.read()).encode('ascii', 'ignore')
+    r = r.translate(None, string.puntuation)
+    w.write(w)
 
     w.close()
     f.close()
