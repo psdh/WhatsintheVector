@@ -18,7 +18,7 @@ def main():
         os.chdir(base + '1830-39/')
         f = codecs.open(fil, 'r', encoding='utf8')
         r = unicodedata.normalize('NFKD', f.read()).encode('ascii', 'ignore')
-        f.close()
+            f.close()
 
         r = r.translate(None, string.punctuation)
         t = word_tokenize(r)
