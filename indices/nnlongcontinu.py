@@ -1,0 +1,1 @@
+ii = [('WilbRLW5.py', 1), ('CarlTFR.py', 1), ('BuckWGM.py', 1), ('WestJIT2.py', 2), ('DibdTRL2.py', 1), ('FitzRNS4.py', 1), ('FitzRNS.py', 1), ('BowrJMM.py', 1), ('RoscTTI.py', 1), ('ThomGLG.py', 2), ('DibdTRL.py', 2)]

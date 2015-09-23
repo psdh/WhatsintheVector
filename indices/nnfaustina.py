@@ -1,0 +1,1 @@
+ii = [('HogaGMM.py', 25), ('HogaGMM2.py', 5)]
